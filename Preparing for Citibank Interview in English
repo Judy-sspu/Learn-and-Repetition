@@ -1,0 +1,367 @@
+CitiBank Interview in English：You can simply prepare your work experience and projects, reasons for leaving and future development direction. 
+If you can't bear it, just put the video and read it face to face. The interviews are all in pure Chinese.
+
+Test process, database, python/Java, automation direction can be seen more.
+
+Hello，Let me briefly introduce myself.
+My name is Zhu Ting.In 2020,I graduated from Shanghai Polytechnic University, majoring in communication engineering.
+By now, I've had two years of experience at the age of 24 .
+Next I'll talk about why I plan to leave my job and what I did at work.
+
+WHy I plan to leave Chinasoft International (Shanghai) Technology Service Limited Coperation?
+First of all, too much overtime.
+Secondly, during this year, I have become familiar with the testing process of this project.
+I tend to find a job that matches my work experience.
+
+At present, I work at Chinasoft International Technology Service Limited Corporation. and take on huawei projects called a behavioral modeling tool test.
+The Behavioral Modeling Tool is a simulation software that runs on Windows and functions similarly to the simulink module in matlab.
+So in my work, I often need to build some models ,pre-check and run them.When I got the simulation results,I need to compare them with the expected results.
+
+So，I need to introduce the functions about our testing objects
+
+Behavior工具是一个CS架构的软件。工具中有一些组件库，我们可以拖动一些组件，搭建一些模型，然后进行仿真，会得到一个运行结果，并和simulink模块中的仿真结果进行对比。
+工具还可以进行端口的类型推断、模型检查、配置一些自定义数据类型，比如数组、记录体、枚举、键值对等，以及simulink导入、代码自动生成、数据字典映射、autosar的导入导出等等。
+The Behavior tool is a CS architecture software. There are some component libraries in the tool, we can drag some components, build some models, 
+and then simulate, we will get a running result, and compare with the simulation results in the simulink module.
+The tool can also perform port type inference, model checking, configure some custom data types, such as arrays, 
+record bodies, enumerations, key-value pairs, etc., as well as simulink import, code automatic generation, data dictionary mapping, 
+autosar import and export, and so on.
+
+......介绍下行为建模软件的功能。预检测、运行模型，对搭建的模型进行类型推断、类型系统、数组、记录体、枚举、配置自定义数据类型(like json格式字符串、)、搭建高阶组件模型、状态机、
+simulink导入、代码自动生成、A2L、模型检查、数据字典等等
+
+
+组件库分类：
+Source库
+Sinks库
+Array库
+Conversions库
+  JSON组
+  FlowControl库
+    Aggregators组
+    Selectors组
+    IfControl组
+ HigherOrderActors库   
+ IO库
+ Logic库
+ Math库
+ Matrix库
+ Random库
+ String库
+ DomainActors库
+ Verification库
+ 
+ 针对行为建模工具，行为建模工具是一个怎么样的工具，自己负责的是哪一块？
+ 1、一个建模工具，功能和MATLAB中的simulink模块类似，可以进行搭建一些模型，仿真并输出结果
+ 2、代码生成、那么代码生成这块功能可以介绍一下嘛？
+  For behavioral modeling tools, what kind of tool is a behavioral modeling tool, and which piece is it responsible for?
+ 1. A modeling tool, similar to the simulink module in MATLAB, can build some models, simulate and output results
+ 2. Code generation, so can the function of code generation be introduced?
+ 
+ Basic Setting
+    Language:C/C++  Library C99/C++14 Platform:embedded autosar autosarAp
+    Output directory:
+    Generatings:
+      Generate testfiles
+      Generate log message
+      Generate output sinks
+      Generate RtE header file
+      Generate Generate code for components
+      Generate Pack IO ports
+ 
+ Type mapping 类型映射 int8->sint8
+  ...
+  
+ Style 
+      Initialization Style
+      function initialization init_function/const
+      Code Style 
+      Memory copy style:iteratively/memcpy
+      
+ Optimization
+ 
+ A2L: A2LConfigurations      Target Endianess:Little-Endian/big-Endian
+ 
+ Memory Map:
+ Sections /Pre Statement/Post Statement
+ 
+ 测试的组织架构
+ 
+ 项目经理
+ 测试经理  开发经理  产品经理
+ 测试团队(6) 测试小组长 测试人员(6个 模型搭建  手工测试  自动化测试)
+ 
+ 在项目中承担一个怎样的角色？
+ 负责工具的手工测试、自动化测试
+  
+ Organization of the test
+ 
+project manager
+Test Manager Development Manager Product Manager
+Test Team(6) Test Team Leader Tester (6 Model Building  Manual Test  Automated Test)
+ 
+What is your role in the project?
+Responsible for manual and automated testing of tools
+  
+ 
+Here I need to introduce our testing process.
+First, the development personnel conduct the requirement presentation. 
+The test personnel can understand the presentation content in the meeting and provide suggestions based on the content.
+
+The second,test engineer designs the test based on the test content provided by the development personnel.
+We also analyze the points from which we should design the test. 
+
+Third, after the test design is completed, our team needs to conduct the test review. 
+After that, the team needs to invite the development personnel to conduct the test review so that we can see what needs to be improved in the test design.
+
+Fourth, we begin to conduct iterative testing. Function test cases are written according to the test design.
+If any exception is found during the test,we ought to contact development personnel engineers for confirmation and submit a trouble ticket.
+If development personnel do not agree with us, we can invite colleagues in our team to review the problem.
+
+测试和开发产生分歧该怎么办？
+1、寻找图片或者是文字等证据说服开发
+2、拉自己的主管或者是测试经理和开发评审
+3、话术上有技巧，给开发戴下高帽子，说为了工具好，站在客户的角度去考虑
+4、对于开发不回复的问题，直接提单，然后等开发那边找我们评审，核实不是问题转需求关闭或者非问题关闭
+What should I do if there is a divergence in testing and development?
+1. Find pictures or text and other evidence to persuade and develop
+2. Pull your own supervisor or test manager and development review
+3. There are skills in words, put on a high hat for development, and say that for the sake of good tools, consider from the customer's point of view
+4. For problems that the development does not reply, directly bill of lading, and then wait for the development side to find us for review to verify 
+that it is not a problem to turn the demand closed or non-problem to close
+
+错误的分类：
+
+
+Fifth, after the function test is complete, we need to upload the written cases to TengWu and associate the cases with CIDA.
+
+Sixth, when all this is done, we begin to write automated testing cases. Our tools are currently implemented primarily in the Java language.
+Infrequently, Python and C are involved.
+
+自动化脚本的结构是怎样的？公共方法啊，自己写的用例啊，框架啊，swing、javafx啊，拖组件用的方法啊
+
+Java语言用来实现自动化用例
+Java自动化工程的目录，我们的测试项目是使用maven管理的，pom.xml可以配置路径并导入行为建模工具的jar包，
+core包：
+      TestInv.java启动服务
+      Context.java环境配置
+util包：
+      AutoTestEventUtils.java   封装了所又组件都会使用到的一些公共方法
+      ActorsCommon.java         封装了特定组件会使用到的方法
+      FX.java                   fx框架
+      CustomType.java     
+      ClipboardHelper.java    
+behavior包：放自动化用例文件，一个用例写一个类
+
+如何确定工具界面的id、按钮、CheckBox呢
+首先是判断该界面是基于何种框架，swing还是javafx
+swing-->
+org.launcher().launch().
+Thread.sleep（30000）调用起swing explorer开发辅助工具，确定界面的按钮id等
+
+javafx -->和开发沟通，询问id，或者自己打印某个节点的前端结构进行分析
+
+自动化用例失败了如何调试？
+打断点，加入一些打印的信息，看看控制台都输出了什么，分析log、以及失败的截图
+
+What is the structure of an automation script? Public methods, self-written use cases, frameworks, swing, javafx, methods for dragging components
+The Java language is used to enable automation use cases
+Catalog of Java automation projects, our test projects are managed using maven, pom .xml can configure paths and import jar packages of behavioral modeling tools,
+Core Package:
+      TestInv .java start the service
+      Context .java environment configuration
+util package:
+      AutoTestEventUtils.java encapsulates some of the common methods that all components use
+      ActorsCommon.java encapsulates the methods that a particular component uses
+      FX.java fx framework
+      CustomType.java     
+      ClipboardHelper.java    
+Behavior package: Put automation use case files, write a class for each use case
+How to determine the id, button, and CheckBox of the tool interface?
+The first is to determine what framework the interface is based on, swing or javafx
+swing-->
+org.launcher().launch().
+Thread.sleep (30000) calls the swing explorer development assistance to determine the button ID of the interface, etc
+javafx --> communicate with developers, ask for IDs, or print the front-end structure of a node for analysis
+
+
+
+Seventh, we need to put these automated testing cases into the execution machine.
+
+Eighth, after automated cases are executed in batches, we need to analyze the failed automated cases. Therefore, we can collect failure logs.
+The possible causes are that the test case execution step is incorrect, and the test case assertion fails. 
+After the analysis is complete, we need to modify the failed automatic cases and upload the cases for execution to improve the case execution success rate.
+
+这样一个迭代就结束了，每个迭代结束，我们需要输出一篇测试报告，测试报告中写了什么？
+
+测试报告：2.1	测试版本信息、2.2	测试组织、
+迭代	任务	开始时间	结束时间	总计（天）
+2.3	测试环境描述
+2.4	测试工具汇总
+3	测试结论、关键风险和规避措施
+本轮迭代测试迭代交付质量良好。新增测试用例51条，新增问题16个。支持新增模型库的对应的代码生成处理发现问题单12个，支持模型假设断言约束建模发现问题4个。无关键、严重问题，截止2022.08.26未修复完成的问题单0个。
+本次迭代测试覆盖基本功能测试，易用性测试，UI测试，可靠性测试测试。
+
+3.1	测试结论总结 是否可以出口
+3.2	关键风险和规避措施
+4	详细测试结论 
+
+功能测试
+用例多少条、问题单多少个、提示、一般、严重、致命单
+性能测试    用例执行的时间，CPU使用率
+兼容性测试
+
+5	缺陷统计和分析
+6	附录
+Such an iteration is over, and at the end of each iteration, we need to output a test report, what is written in the test report?
+Test report: 2.1 Test version information, 2.2 Test organization,
+Iteration Task Start Time End Time Total (days)
+2.3 Test environment description
+2.4 Summary of Test Tools
+3 Test conclusions, key risks and avoidance measures
+The quality of this round of iterative testing is good. 51 new test cases and 16 new questions. It supports 12 problem sheets found by the corresponding code 
+generation processing of the new model library, and 4 problem finding problems that support model hypothesis assertion constraint modeling. 
+There are no critical and serious problems, and 0 problem lists that have not been fixed as of 2022.08.26.
+This iteration test covers basic function test, usability test, UI test, and reliability test test.
+3.1 Summary of test conclusions Whether it can be exported
+3.2 Key Risks and Avoidance Measures
+4 Detailed test conclusions 
+
+Functional testing
+How many use cases, how many tickets, prompts, general, critical, fatal orders
+Performance testing
+Compatibility testing
+
+5 Defect statistics and analysis
+6 Appendix
+
+
+
+So,what I have done in the past 1 years?
+Huawei's smart car project --- behavior modeling tool test
+
+1. Participate in the requirement analysis and test design of Hasbehavior1.0.
+Review
+2. Understand the functional and non-functional requirements of the tool and perform Simulink analysis if necessary,
+A total of 241 text cases have been prepared in half a year.
+3. Participate in and automate the text cases of the HASStudioBehavior1.0 project.
+Use the Java language to compile automated cases within half a year.
+991: Analyze and analyze the implementation effect of automation and analyze the failure of CI automation cases.
+The automation rate has been improved to 90%.
+4. Perform regression tests at the iteration exit to ensure the project delivery rate.
+5. Write blog posting community, summarize work, output 21 articles semi-annually, and communicate with each other.
+Share with colleagues in the team to improve the test efficiency.
+自己写的博客写的是什么，总结、模型搭建？测试流程？如何提单，如何和开发battle
+6. Conduct four rounds of behavior modeling tool documentation tests every half year to ensure timely documentation follow-up,
+This helps customers build models using tools.
+
+总结下行为建模提单错误的类型：
+1、提示单、UI界面字体不对、文字错误
+2、一般、点击按钮或者搭建运行模型出现空指针异常
+3、严重单、运行模型无法结束进程、影响其它功能使用
+4、重启电脑后，依然有bug
+To summarize the types of behavioral modeling bill of lading errors:
+1. The font of the prompt sheet and UI interface is incorrect, and the text is wrong
+2. Generally, click the button or build the running model with a null pointer exception
+3. Serious single, the running model cannot end the process, affecting the use of other functions
+4. After restarting the computer, there are still bugs
+
+
+About the database
+
+About the Java
+
+About the Python
+
+About Data Structures and Algorithms
+ 
+
+
+I feel very lucky to have the second interview
+Ok, very much that you took time out of your busy schedule to interview, bye bye
+
+
+selenium   
+1、如何使用
+2、如何定位网页的元素
+3、可以使用哪几种方法，
+4、常用的方法有哪些？
+
+
+Common Linux Commands：https://blog.csdn.net/weixin_49851451/article/details/125821580
+Linux的解压缩命令
+
+Common Git Commands:https://www.cnblogs.com/wish-yang/p/15619076.html
+Common Docker Commands:https://blog.csdn.net/JinLu_/article/details/125700340
+
+数据结构与算法：冒泡排序及优化：https://blog.csdn.net/hcz666/article/details/117810787
+
+.py和.pyc文件有什么区别
+python的可变类型，不可变类型
+可变类型：字符串   str 布尔类型  bool 浮点数   float 列表    list 字典   dict 集合 set
+不可变类型：整数   int 元组   tuple日期   date
+
+python的浅拷贝和深拷贝
+浅拷贝只复制某个对象的引用，而不复制对象本身，新旧对象还是共享同一块内存
+深拷贝会创造一个一摸一样的对象，新对象和原对象不共享内存，修改新对象不会改变原对对象。
+
+python的切片
+
+python的重载、多态
+
+python的垃圾回收机制
+https://blog.csdn.net/m0_51691302/article/details/123117569
+
+python的装饰器
+https://www.runoob.com/w3cnote/python-func-decorators.html
+
+git的常用命令
+本地仓库、暂存区、远程仓库的概念
+如何切换分支，拉取代码流程，不小心修改了一个文件，如何撤销操作
+
+tcp和udp有什么区别
+三次握手、四次挥手
+
+java
+protected关键字、arrayList、泛型
+static关键字加不加有什么区别
+abstract抽象类和interface接口有什么区别
+==和equals方法有什么区别
+接口和抽象类有什么区别
+ArrayList和Linklist有什么区别
+
+
+
+测试工具的使用 selenium、postman
+
+通信知识：4g通信协议、5g通信协议、通信原理、数字信号处理、信号与系统这块
+
+软件测试
+
+登陆界面的测试
+
+BS架构和CS架构的区别
+B/S架构是浏览器和服务器架构模式。是对C/S架构的一种变化或者改进的架构。
+C/S架构是客户端和服务器架构模式。服务器端负责数据的管理，客户端负责完成和用户的交互。
+
+1、硬件环境要求不同：CS架构需要安装客户端且建立在局域网之上，对硬件的要求高；BS架构不需要安装客户端且建立在广域网之上，对硬件的要求低。
+2、系统维护、升级难易不同：CS的升级维护需要在客户端和服务端都进行，难度大；BS架构的维护升级只需要处理服务端即可，相对简便。
+3、系统安全级别不同：CS结构采取点对点的结构模式，使用的网络协议安全级别较高；BS结构采取一点对多点、多点对多点的开放式结构模式，安全性有待提高。
+4、系统速度不同：CS结构（二层）在逻辑结构上比BS结构（三层）少一层,对于相同的任务,CS结构完成的速度总比BS结构快,使得CS更利于处理大量数据。另外,由于客户端实现与服务器的直接相连,没有中间环节,因此响应速度快。
+5、交互性不同：CS结构的交互性很强,在CS结构中,客户机有完整的客户端软件,能处理大量的、实时的数据流,响应速度快。BS结构虽然可以提供一定的交互能力,但交互能力很有限。
+
+MySQL的左连接、右连接用的什么关键字、排序用的什么关键字
+
+TCP、IP、UDP通信 https://blog.csdn.net/zzfightingy/article/details/88383635
+三次握手、四次挥手：https://blog.csdn.net/qzcsu/article/details/72861891
+
+
+adb命令
+
+dockers容器部署
+
+自动化脚本的设计模式
+can报文怎么发送
+
+自动化用例框架的优点和缺点分别是什么
+

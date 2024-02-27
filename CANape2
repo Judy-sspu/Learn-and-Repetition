@@ -1,0 +1,13 @@
+如果需要配置记录模块，同样可以点击到测量配置窗口中完成，在添加完测量信号之后，CANape会创建一个默认的record，在该record中会默认记录所有的测量信号，如需要配置一些自定义的模块，比如设置一些一定的触发条件，可以在此新建一个mdf的record，配置的触发条件可以在Record的Triggr模块下进行勾选，CANape有两种形式的触发形式，包括Status Triggr状态触发，和Event Triggr条件触发，状态触发条件下记录的是满足触发条件下所有时刻的数据，事件触发条件下，记录的是满足触发条件的数据，同时，事件触发支持配置开始触发事件，以及结束触发事件，
+接下来举例介绍
+
+首先在开始菜单，打开CANape新建工程，Create New Project，创建一个新的CANape工程，并填写工程的名称，然后选择CANape工程的路径，最后勾选Desktop可以创建工程的快捷方式，工程创建完之后，可以将后续需要的A2L文件、elf文件、hex文件等复制到工程路径下，
+
+将A2L文件添加到工程中，首先点击空白页的1:new，并命名为Device页，
+
+添加A2L文件，可以通过Device->New Device或者Device->New from Database来进行添加，若果已经有数据库，建议选择New from Database，然后开始选择相应的接口，一路nex，然后选择相应的软件通道以及逻辑通道，这里选择CAN3逻辑通道，这里该通道还没有被分配，如需加载map文件，可以选择Map file(s) predetermined,进行相应的添加，注意添加了Map文件之后，要进行Map文件格式的匹配，加载完Map文件之后，可以选择，根据Map文件的内容更新或者是不更新A2L文件，
+
+如果没有分配通道的话，是无法连接ECU的，
+右键 Other window->Device Window，可以打开device window来查看连接状态，目前显示CAN3没有被分配，继续邮件Other windows->write window,同理打开Trace window,
+
+然后打开Vector Hardware来进行通道的分配工作，假设ECU是连接到1610上的某一路通道，那么可以把CAN3分配到对应的通道，

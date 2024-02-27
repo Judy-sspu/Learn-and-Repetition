@@ -1,0 +1,578 @@
+现在开始回忆下来万国这边两个月都干了啥吧，以及我都学习到了什么。
+
+FastStone_Capture屏幕录像2019-11-14-00-27-18.rar
+
+HIL测试,硬件在环测试，分析总结。并熟悉ASPICE开发流程 https://blog.csdn.net/yuzistu_CSDN/article/details/109008938
+协议学习、CAN、CANfd、J1939、XCP协议
+工具使用DSPACE（ControlDesk、ConfigurationDesk）安装及使用、MATLAB使用，RTICANMM编译运行，生成S-Function；
+ControlDesk中如何控制台架，以及变量的监控，使能全局变量，以及Bus Navigator中有几路CAN，下面的报文是TX、还是RX;如何搜索并注册台架的Devices
+
+  CFlash刷写与使用、CANoe进行收发报文、CAPL脚本的编写、CANape进行标定
+BMS台架的基本结构、以及其中板卡的信息，多少块板卡，何种类型，每块板卡有多少个pin，每个pin的通道类型是怎么的，每一种通道类型的具体属性是怎样的，以及BMS台架之间各个模块连线是怎样的。
+
+电脑作为上位机，通过网线和Dspace Hil机柜相连，Hil机柜和DUT机柜通过以太网连接进行数据的交互，DUT机柜再通过接线端子排和BMS控制器相连；同时电脑作为上位机也需要连接CANoe的VN1640A，然后
+VN1640A通过PCAN、DCAN、SCAN(实际也是不同路的CAN)等实线与台架的特定端口进行连接，从而构成闭环。
+
+加入整个闭环电路有问题，要如何排查？可以先断开机柜之间的连线(台架和上位机之间不进行通信)，直接通过接线端子排把某个引脚接到CANoe VN1640A盒子上并查看通信情况，如果通信正常的话，
+说明台架是有问题的。
+
+ 
+采样率	　
+增益误差	器件理想输出与实际输出之差
+差分输出电压	　
+可调输出电流	　
+具有最大输出幅度的频率范围	　
+稳态时间	系统的状态不再随时间发生改变，波动的幅度在一定的精度以内，达到这个状态所需要花的时间
+刷新率	电子束对屏幕上的图像重复扫描的次数。刷新率越高，所显示的图象（画面）稳定性就越好。
+分辨率	以16bit为例，分辨率2^16,采集卡的分辨率为1/65536,分辨率越高，A/D转换精度越高
+阈值电压	传输特性曲线中输出电流随输入电压改变而急剧变化转折区的中点对应的输入电压
+3分贝截止频率	当输入信号的幅值不变，改变输入信号的频率使输出信号降至最大值的0.707倍，此时输入信号的频率
+低边参考电压	　
+高边参考电压	　
+对地参考电压	以地面电势为0，某节点相对于该点的电压
+偏移误差	　
+阈值迟滞	　
+阈值分辨率	　
+电导率	电阻的倒数，电导越大，电阻越小
+最大功耗	　
+电阻误差	　
+
+
+ 
+BMS台架说明
+1	试验台组件
+测试台由DUT机柜和HIL机柜组成。
+ 
+HIL机柜包含实时模拟器、控制和供电电源。
+DUT机柜包含电池单元模拟板和连接DUT的安全隔间。
+1.1	HIL机柜
+ 
+堆叠灯（1）堆叠灯通过视觉信号指示测试台的当前状态。
+堆叠灯通过视觉信号指示测试台的当前状态，位于HIL机柜上。在操作测试台之前，必须将堆叠灯设置为直立。当测试台通电时，所有灯都会亮起。主开关设置为ON后，这大约需要一分钟。如果灯无法亮起，请关闭测试台，并联系dSPACE支持部门更换灯。
+ 	位置	信号类型	状态	说明
+	1 	红色信号灯	熄灭	未检测到故障
+	1 	红色信号灯	开启	检测到故障，导致测试台无法操作，故障状态LED显示有关检测到的故障的信息，可依据闪烁频率而确定
+	2	黄色信号灯	熄灭	模式选择开关设置为位置O（自动模式）
+	2	黄色信号灯	闪烁	模式选择开关设置为位置1（服务模式）
+	2	黄色信号灯	开启	测试台上至少有一个绝缘监视器被停用
+	3	绿色信号灯	熄灭	没有加载实时应用程序
+	3	绿色信号灯	闪烁	高压设备已准备好接通
+	3	绿色信号灯	开启	高压设备已接通
+总线连接器（2）这些连接器提供总线信号。有关信号和引脚分配的信息，请参阅提供的测试台电路图。
+VBAT和GND连接器(3)VBAT和GND的附加输出。
+Emergency stop（4）立即按下以关闭整个试验台。有关更多信息，请参阅第27页的紧急停止。
+汽车以太网连接器（5）允许您连接汽车以太网通道以与DUT通信。
+电源（6）实时模拟器和绝缘监视器的内部电源。
+实时模拟器（7）实时模拟器由一个规模处理单元和I/O硬件组成。用于计算模拟应用程序。实时模拟器由ControlDesk控制，ControlDesk运行在主机PC上。实时模拟器和上位机通过以太网连接。
+主机PC连接器（8）可以通过以太网和RS232串行接口（控制故障模拟硬件）将主机PC连接到测试台。有关信号和引脚分配的信息，请参阅提供的测试台电路图。
+模拟电气故障的硬件（9）可以模拟布线中的电气故障。请参阅第62页上的用于模拟电气故障的硬件。
+实际负载的搁板（10）允许放置实际负载。
+实负载连接器（11）用于连接实负载。
+高压电源（12）可以模拟电动汽车供电设备的高压电池。
+电子负载（13）可以模拟电流吸收。
+低压电源（14）可以模拟电动汽车的低压电池。
+控制（15）可以控制测试台架。请参阅第38页上的控制。
+
+下图显示了HIL机柜的控制(开关)装置
+ 
+MAIN SWITCH（1）用于打开或关闭供电。
+将MAIN SWITCH设置为ON以打开供电。
+将MAIN SWITCH设置为OFF以关闭供电。
+
+微型断路器（2），作用是保护试验台免受过载或短路从而造成损坏。
+如果MAIN SWITCH设置为ON，MAIN POWER（3）亮起。台架供电开启。
+FAULT STATUS（4）使用闪存代码显示故障状态信息。LED重复闪烁代码，直到故障清除。
+闪烁频率	含义	说明
+不闪烁、关闭状态	\	测试台已关闭
+一直开启	无故障	未检测到故障
+闪烁2次，暂停1次	门锁故障	安全舱门或后门打开。
+闪烁3次，暂停1次	看门狗错误	缺少来自实时应用程序的看门狗信号
+闪烁4次，暂停1次	紧急停止	紧急停止功能激活
+闪烁5次，暂停1次	绝缘故障	绝缘监视器检测到绝缘故障
+闪烁6次，暂停1次	过温故障	用于绝缘故障模拟的硬件变得太热
+闪烁7次，暂停1次	内部故障	检测到备用通道的接线故障
+闪烁8次，暂停1次	内部故障	至少出现以下系统内部故障之一：
+电源单元（PSU）中的交流继电器故障
+高压直流继电器故障
+
+EMERGENCY STOP（5）按下以立即关闭整个测试台。有关更多信息，请参见第27页的紧急停止。
+POWER ON/OFF（6）用于打开或关闭实时模拟器和内部电源。按POWER ON/OFF开关的绿色侧（I）打开实时模拟器和内部电源。开关中的灯亮起。按POWER ON/OFF开关的红色侧（O）关闭实时模拟器和内部电源。
+HIGH VOLTAGE START/STOP（7）允许您打开或关闭高压电源和电池单元电压模拟板。按HIGH VOLTAGE START/STOP开关的白色侧（I）打开高压。开关中的灯亮了。按下HIGH VOLTAGE START/STOP开关的黑色侧（O）以关闭高压。
+ACTIVATE SERVICE MODE（8）按下开关激活服务模式。如果服务模式已激活，开关中的灯将亮起。有关更多信息，请参阅第68页上的校准电池单元电压仿真板。
+MODE SELECTION SWITCH（9）允许您选择操作模式：
+位置0：自动模式
+测试台可以操作自动测试。请参阅第58页上的操作测试台。
+位置1：维修模式
+测试台可以在维修模式下操作，以校准电池电压。请参阅第68页的校准电池电池电压仿真板。
+
+下图显示了HIL机柜后侧的接口
+ 
+紧急停车接口（1）允许您连接无电位触点，以评估另一个控制系统中的紧急停车信号。有关信号和引脚分配的信息，请参阅提供的测试台电路图。
+电源连接器（2）用于将测试台连接到电源。
+以太网连接器(3)为DUT机柜提供以太网连接。
+连接机柜的连接器（4）连接DUT机柜和HIL机柜的连接器。请参阅第47页上的如何安装测试台。
+PE连接（图中未显示）机柜之间的附加PE连接。请参阅第47页上的How to Install the Test Benchmark
+1.2	DUT机柜
+DUT机柜包含电池单元模拟板和连接DUT的安全舱。
+ 
+电池单元电压模拟板（1）允许您在电池级别模拟高压电池。
+风扇单元（2）风扇单元为电池单元电压模拟板通风。
+Emergency stop（3）立即按下以关闭整个试验台。有关更多信息，请参阅第27页的紧急停止。
+安全室（4）安全室允许您安装DUT，并提供信号和电源电压来操作DUT。请参见第43页的安全隔间。
+安全舱
+
+下图显示了安全隔间。有关信号和引脚分配的信息，请参阅提供的测试台电路图。
+ 
+电池温度信号连接器（1）这些连接器提供模拟电池电池温度的测量信号。
+测量点（2）用于测量测试台的高压。请参阅第30页上的测量点。
+安全开关（3）此安全开关监控安全舱门。
+电池电压连接器（4）这些连接器提供模拟高压电池的电池电压。
+高压电源连接器（5）连接器提供高压电源单元、分流传感器模拟、霍尔传感器和绝缘故障模拟的信号。
+低压信号连接器（6）这些连接器提供模拟、数字和通信信号。有关更多信息，请参阅第29页的安全室。
+后侧线缆
+DUT机柜的背面包含用于将DUT机柜连接到HIL机柜的电缆。请参阅第47页上的如何安装测试台。
+1.3	试验台的技术数据
+ 
+噪声发射
+在标准操作期间，空气中的声噪发射通常低于70 dB(A)。根据现行试验条件，这些排放值可能会暂时超过。因此，建议您在操作过程中佩戴听力保护装置。
+
+
+
+
+2	使用测试台
+下面向您介绍使用测试台时必须执行的步骤。
+安全注意事项:
+只有适当合格和有经验的工作人员才能执行以下所述的工作。因测试台安装或使用不当而导致的dSPACE硬件损坏或故障不在保修范围内。在开始所述的任何工作步骤之前，请确保您已阅读并理解本手册中提供的所有安全预防措施。观察测试台上的产品安全标签。
+在使用测试台的所有阶段，您必须遵守以下警告：
+电击造成死亡和/或严重伤害的风险。测试台的电压高达1,000 V DC。您的操作会影响或控制连接到测试台的电子系统。您的行为可能会导致死亡、严重伤害、火灾和/或财产损失的危险。开放的电源端子有触电或烧伤的风险。即使主电源关闭，某些电路也会带电。一些组件，如电源电容器，可以携带残余电压。在打开存储模块之前，请断开电源连接器，并等待至少五分钟，让所有组件放电。使用双极电压测试仪验证整个测试台是否无电压。
+2.1	安装测试台
+以下模式显示了具有所需连接的机柜的后侧。
+ 
+如何安装测试台架
+目标   进行试验台运行所需的电气连接。
+前置条件 试验台位于所需位置，其滚轮已锁定。您满足安全注意事项中所述的环境条件
+运输和定位测试台，第14页。
+安装测试台的方法:
+	1、将DUT机柜的线缆连接到HIL机柜的连接器上：请勿将线缆布放在人必须行走的地方，将线缆穿过走线管。有关更多信息，请参见提供的测试台电路图。
+	2、确保插头和插座的标签匹配。不正确的插入连接可能导致不可预测的结果，并损坏测试台。
+3、注意: 建议使用额外的接地连接将HIL机柜连接到等电位连接轨。保护地的横截面必须符合EN 60204标准。
+4、将主机PC的以太网电缆连接到HIL机柜前面的主机-PC连接器（-XS8）。
+2.2	安装DUT
+引入: 下面向您介绍安装DUT（被测设备）必须采取的步骤。只有具有适当资格和经验的员工才能执行以下所述的工作步骤。
+安全注意事项：在开始所述的任何工作步骤之前，请确保您已阅读并理解本手册中提供的所有安全预防措施。观察试验台上的产品安全标签。有关本寿命阶段适用的安全注意事项，请参见第18页安装和更换DUT的安全注意事项。
+
+DUT安装基础
+DUT所需的所有连接器均可在安全室内使用。请参见下图。
+ 
+只有合格的电工才能打开安全舱，用于DUT的安装、更换、维护或故障排除。安全舱钥匙只能由授权人员使用
+
+电缆线束：将DUT连接到测试台的电缆线束由dSPACE提供，或者您必须自己制作电缆线束。有关安全室的连接器引脚排列，请参见提供的测试台电路图。请遵守电缆线束的制作规则。请参见第51页上的用于连接DUT的电缆线束的制造规则。
+
+被测设备(DUT): 参考您用作受试装置（DUT）的部件的相应供应商提供的安全预防措施和技术数据，并采取适当措施避免处理部件可能产生的风险。dSPACE明确排除了因将部件与测试台一起使用而造成的任何伤害或财产损失的责任，这些部件不适合使用范围中所述目的。仅使用足够绝缘的DUT。试验台可产生高达1000V DC的电压。仅使用高压侧与低压侧绝缘的DUT。在将DUT连接到试验台之前，请检查两侧的绝缘情况。
+注意: 试验台有一个绝缘监视器。监视器无法检测到来自DUT的电流绝缘低压信号的绝缘错误。与此测试台一起使用的DUT必须设计为在关闭市电电源后10秒内完全放电。
+
+
+DUT连接线束制作规则
+
+2.3	第一步
+
+2.4	操作测试台
+
+2.5	模拟电气故障
+
+2.6	故障排除和维护
+
+2.7	校准电池单元电压仿真板
+
+其他
+ 
+
+从上到下台架的基本结构
+开关 Main Switch 微型电路控制器 信号指示灯 低压上电开关，高压上电开关
+
+低压程控电源显示
+2块高压程控电源显示
+TDK程控电源显示
+负载隔板
+FIU故障注入单元
+IO板卡  DS6101 Multi I/O 2	DS6201 Digital I/O 1 	DS6301 CAN/LIN 1 	DS6341 CAN 1 	DS6241 D/A 4
+每块板卡有不同的接口，就DS6101而言，有3个接口，分别为P1、P2、P3，每个接口对应50个pin脚，每个pin脚有对应的输入输出通道类型。
+
+SCALEXIO实时处理器
+以及台架一些其他的接口，并且有指明接口类型，(CAN/LIN)
+
+针对DS6101 P1 的pin 口
+General parameters
+Parameter
+
+Specification1)
+
+Angular processing units
+
+Number of units
+
+6 (usable as slaves)
+
+Maximum speed
+
+168,000 °/s (28,000 rpm)
+
+Communication interface
+
+IOCNET (up to 2.5 Gbit/s link speed)
+
+Provided channel types
+
+10 x Analog In 4
+
+1 x Analog In 5
+
+8 x Analog Out 6
+
+1 x Analog Out 7
+
+3 x Analog Out 8
+
+4 x Analog Out 9
+
+12 x Digital In 3
+
+14 x Digital Out 3
+
+10 x Flexible In 3
+
+6 x Resistance Out 2
+
+I/O connectors
+
+3 × 50-pin Sub-D
+
+Typical power consumption
+
+14.4 W (typ. 0.6 A, at +24 V)
+
+Physical size
+
+238 × 100 × 59 mm (without fastening bracket)
+
+Requires 3 slots
+
+Mass
+
+430 g
+
+------------------------------------------------------------------------------------------------
+
+Analog In 4 channel type
+The Analog In 4 channel type is used to measure an analog voltage signal in the range 0 V … +60 V. 
+
+Functionality
+
+Parameter
+
+Specification1)
+
+Analog voltage measurement
+
+Input voltage range
+
+0 V … +60 V
+
+Reference voltage (reference pin to GND)
+
+-10 V … +60 V
+
+Resolution
+
+16 bit
+
+Sample rate
+
+85.7 kS/s (fixed, multiplexed)
+
+Offset error
+
+±5 mV (typ.)
+
+Gain error
+
+±0.1 % (typ.)
+
+Supported function blocks
+
+Voltage In
+
+Voltage Signal Capture
+
+Injection/Ignition Voltage In (analog interface)2)
+
+Channel multiplication
+
+No
+
+Failure routing unit (FRU)
+
+No
+
+-------------------------------------------------------------------------------------------------------------------------------------------
+Analog Out 7 channel type
+The Analog Out 7 channel type is used to output voltages or currents to simulate sensors that require a fast response between input and output channels. The channel is galvanically isolated from system ground. 
+
+An example for this channel type is a linear oxygen sensor for lambda measurement.
+
+Functionality
+
+Parameter
+
+Specification1)
+
+Analog voltage out
+
+Differential output voltage
+
+-10 V … +10 V
+
+Maximum output current
+
+±5 mA
+
+Update rate
+
+1.953 MS/s
+
+Resolution
+
+14 bit
+
+Gain error
+
+±0.5 % (typ.)
+
+Offset error
+
+±3.5 mV (typ.)
+
+Analog current out
+
+Adjustable output current
+
+-5 mA … +5 mA
+
+Reference voltage (reference pin to GND)
+
+-8 V … +10 V
+
+Update rate
+
+1.953 MS/s
+
+Resolution
+
+14 bit
+
+Offset error
+
+±7.5 µA (typ.)
+
+Gain error
+
+±0.2 % (typ.)
+
+Supported function blocks
+
+Voltage Out
+
+Waveform Voltage Out
+
+Lambda DCR2)
+
+Lambda NCCR3)
+
+Channel multiplication
+
+No
+
+Failure routing unit (FRU)
+
+No
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Digital Out 3 channel type
+The Digital Out 3 channel type is used to simulate a digital output stage of 0 V (low-side level) or in the range +5 V … +60 V (high-side level). The channel is configurable as a low-side or high-side switch, or for push-pull mode. All the channels of the Digital Out 3 channel type have common pins for connecting two external high reference voltages.
+
+A typical example for this channel type is the simulation of a crash sensor with a low-side switch output.
+
+Functionality
+
+Parameter
+
+Specification1)
+
+Digital voltage out
+
+Low-side reference voltage
+
+0 V
+
+High-side reference voltages
+
+Two external high reference voltages VBAT1 and VBAT2, +5 V … +60 V each
+
+Output current
+
+0 … ±140 mARMS
+
+Note
+To improve signal integrity, it is recommended to use all the VBATx pins in parallel. Each VBATx pin can carry a maximum of only 1 ARMS.
+
+Frequency
+
+0 … 150 kHz
+
+Digital output mode
+
+High-side switch to
+
+VBAT1
+
+or VBAT2
+
+Low-side switch to internal ground
+
+Push-pull tri-state between internal ground and:
+
+VBAT1
+
+or VBAT2
+
+Supported function blocks
+
+Multi Bit Out
+
+Digital Pulse Out
+
+PWM/PFM Out
+
+Wavetable Digital Out
+
+Angular Wavetable Digital Out
+
+Waveform Digital Out
+
+Digital Incremental Encoder Out
+
+Crank/Cam Digital Out
+
+SENT Out
+
+Channel multiplication
+
+No
+
+Failure routing unit (FRU)
+
+No
+
+Unless stated otherwise, the specifications are valid only if the dSPACE hardware is correctly powered, switched on, and ready for operation.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+通道类型	功能	参数说明	规格
+Analog In 4	模拟电压测量	输入电压范围	0 V … +60 V
+		"对地参考电压
+"	负10V~正60V
+		分辨率	16 bit
+		采样率	85.7 kS/s (fixed, multiplexed)
+		偏移误差	±5 mV (typ.)
+		增益误差	±0.1 % (typ.)
+Analog In 5	模拟电压测量	输入电压范围	负2V~正2V
+			负10V~正10V
+		"对地参考电压
+"	负10V~正60V
+		分辨率	16 bit
+		采样率	85.7 kS/s (fixed, multiplexed)
+		偏移误差	±5 mV (typ.)
+		增益误差	±0.1 % (typ.)
+Analog Out 6	模拟电压输出	输入电压	0 V … +60 V
+		对地参考电压	负2V~正2V
+		最大电流	正负5mA
+		刷新率	382.3 kS/s (fixed, multiplexed)
+		分辨率	14 bit
+		稳态时间	20 µs (full-scale to 1 LSB)
+		偏移误差	±5 mV (typ.)
+		增益误差	±0.1 % (typ.)
+Analog Out 7	模拟电压输出	差分输出电压	负10V~正10V
+		最大电流	正负5mA
+		刷新率	1.953 MS/s
+		分辨率	14 bit
+		偏移误差	±3.5 mV (typ.)
+		增益误差	±0.5 % (typ.)
+	模拟电流输出	可调输出电流	负5mA-正5mA
+		对地参考电压	负8V~正10V
+		刷新率	1.953 MS/s
+		分辨率	14 bit
+		偏移误差	±7.5 µA (typ.)
+		增益误差	±0.2 % (typ.)
+Analog Out 8	模拟电压输出（变压器耦合）	输入电压	负20V~正20V
+		对地参考电压	负60V~正60V（电隔离）
+		最大电流	正负5mA
+		刷新率	382.3 kS/s (fixed, multiplexed)
+		分辨率	14 bit
+		具有最大输出幅度的频率范围	500 Hz … 20 kHz
+		噪声产生	是
+Analog Out 9	模拟电压输出	输出电压	0V~正10V
+		对地参考电压	负2V~正2V
+		最大电流	正负5mA
+		刷新率	382.3 kS/s
+		分辨率	14 bit
+		稳态时间	20 µs (full-scale to 1 LSB)
+		偏移误差	±0.5 mV (typ.)
+		增益误差	±0.1 % (typ.)
+	模拟电流输出（电流吸收）	输出电流	负30mA-正30mA
+		对地参考电压	负2V~正18V
+		刷新率	382.3 kS/s
+		分辨率	14 bit
+		偏移误差	±7.5 µA (typ.)
+		增益误差	±0.2 % (typ.)
+Digital In 3	数字电压测量	数字输入电压	0 V … +60 V
+		阈值电压	0V~正24V
+		阈值迟滞	0.2 V (typ.)
+		3分贝截止频率	150 kHz
+		阈值分辨率	8 bit
+		输入电阻	391 kΩ
+Digital Out 3	数字电压输出	低边参考电压	0 V
+		高边参考电压	两个外部高参考电压VBAT1和VBAT2,+5 V...每个+60 V
+		输出电流	0 … ±140 mARMS
+		频率	0 … 150 kHz
+		数字输出模式	高端开关至VBAT1
+			高端开关至VBAT2
+			低端开关至内部接地
+			内部接地和：VBAT1
+			内部接地和：VBAT2
+Flexible In 3	数字电压测量	输入电压范围	负10V~正10V
+		对地参考电压	负10V~正10V
+		分辨率	16 bit
+		采样率	85.7 kS/s (fixed, multiplexed)
+		偏移误差	±2 mV (typ.)
+		增益误差	±0.1 % (typ.)
+		3分贝截止频率	150 kHz
+		输入电阻	500k欧
+		数字输入电压	负10V~正10V
+		阈值电压	负10V~正10V（快速阈值自适应）
+		阈值迟滞	0.2 V (typ.)
+		阈值分辨率	8 bit
+		输入电阻	500 kΩ
+Resistance Out 2	电阻输出	可调整电阻	17 Ω … 1 MΩ (stepwise)
+		工作电压（引脚到地）	负3 V ... 18 V
+		最大电流	±80 mA
+		电导分辨率	16 bit
+		最大功耗	250 mW
+		电阻误差	±2%或±3Ω（最大值），以较大者为准，通道的参考引脚在-2 V范围内...+8 V系统接地
+
+
+
+
+
+
+

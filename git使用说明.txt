@@ -1,0 +1,3 @@
+git config user.name查看用户名
+git config user.email查看用户邮箱
+git config --list查看用户所有配置

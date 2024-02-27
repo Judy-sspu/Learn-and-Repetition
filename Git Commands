@@ -1,0 +1,79 @@
+#配置工具
+配置所有本地存储库的用户信息
+$ git config --global user.name "[name]"                  设置要附加到提交事务的名称
+$ git config --global user.email "[email address]"        设置要附加到提交事务的电子邮件
+$ git config --global color.ui auto                       支持命令行输出的有用着色
+
+创建存储库         
+启动新存储库或从现有URL获取存储库
+$ git init [project-name]                                 使用指定名称创建新的本地存储库
+$ git clone [url]                                         下载项目及其整个版本历史记录
+
+进行更改     
+查看编辑并创建提交事务
+$ git status                                               列出要提交的所有新的或修改的文件
+$ git diff                                                 显示尚未暂存的文件差异
+$ git add [file]                                           为版本控制做准备时对文件进行快照
+$ git diff --staged                                       显示暂存和上一个文件版本之间的文件差异
+$ git reset [file]                                        取消暂存文件，但保留其内容
+$ git commit -m "[descriptive message]"                   将文件快照永久记录在版本历史记录中
+
+组更改
+Name a series of commits and combine completed efforts
+$ git branch                                              列出当前存储库中的所有本地分支
+$ git branch [branch-name]                                创建新分支
+$ git checkout [branch-name]                              切换到指定的分支并更新工作目录
+$ git merge [branch]                                      将指定分支的历史记录合并到当前分支中
+$ git branch -d [branch-name]                             删除指定的分支
+
+元素文件名
+重新定位和删除版本控制文件
+$ git rm [file]                                           从工作目录中删除文件并执行删除操作
+$ git rm --cached [file]                                  从版本控制中删除文件，但在本地保留文件
+$ git mv [file-original] [file-renamed]                   更改文件名并准备提交
+
+SUPPRESS TRACKING
+排除临时文件和路径
+*.log
+build/
+temp-*                                                     名为.gitignore的文本文件抑制意外版本控制与指定模式匹配的文件和路径
+$ git ls-files --other --ignored --exclude-standard         列出此项目中所有忽略的文件
+
+保存碎片
+搁置并恢复不完整的更改
+$ git stash                                               临时存储所有修改的跟踪文件
+$ git stash list                                          列出所有隐藏的变更集
+$ git stash pop                                           还原最近存储的文件
+$ git stash drop                                          放弃最近存储的变更集
+
+回顾历史
+浏览和检查项目文件的演变
+$ git log                                                 列出当前分支的版本历史记录
+$ git log --follow [file]                                 列出文件的版本历史记录，包括重命名
+$ git diff [first-branch]...[second-branch]               显示两个分支之间的内容差异
+$ git show [commit]                                       输出指定提交的元数据和内容更改
+
+重做提交
+Erase mistakes and craf replacement history
+$ git reset [commit]                                      在【提交】之后撤消所有提交，并在本地保留更改
+$ git reset --hard [commit]                               丢弃所有历史记录和更改回指定的提交
+
+同步更改
+注册存储库书签并交换版本历史记录
+$ git fetch [bookmark]                                    从存储库书签下载所有历史记录
+$ git merge [bookmark]/[branch]                           将书签的分支合并为当前本地分支
+$ git push [alias] [branch]                               将所有本地分支提交上传到GitHub
+$ git pull                                                下载书签历史记录并合并更改
+
+
+命令行到master分支下
+
+git clone ssh://git@codehub-dg-y.huawei.com:2222/xxx/VOS_Test.git
+git pull 同步更新
+git add . 添加当前目录下的所有文件到暂存区
+git status  查看提交文件数量
+git commit -F commit.txt 提交
+git remote -v （获取仓的状态）获取仓的分支
+git push ting master 将代码上传git到代码仓
+
+
