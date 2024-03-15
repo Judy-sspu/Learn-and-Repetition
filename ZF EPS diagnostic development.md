@@ -82,44 +82,79 @@ Aspice开发流程
 
 
 Diagnostic development instructions
+
 Gateway Box Development Process
+
 Customer demand proposal
+
 PIL and EPM organize CAN matrix, CANalyzer, CANape, dbc, a2l and other files, and verify them with the development engineer before proceeding with formal development. At the same time, let the technician create the gateway box according to the PIN definition of the interface
 Write a C language program and compile hex files in the hightec environment. Use Infineon tools to flash into the gateway box circuit board,
-Test: Connect hardware to form a hardware in the loop system, open projects such as CANalyzer and CANape in the morning machine, and observe the transmission and reception of CANalyzer messages and the reading of variables in CANape
+
+Test: 
+Connect hardware to form a hardware in the loop system, open projects such as CANalyzer and CANape in the morning machine, and observe the transmission and reception of CANalyzer messages and the reading of variables in CANape
 If the results in the matrix are not correct, the program needs to be modified and recompiled to check information such as steering angle, vehicle speed, engine status, etc., and EPS needs to be twisted to check for assistance
+
 Test report writing
+
 Hardware shipment to customers
 If the customer still has any issues, we will first check whether the hardware connection is correct, or analyze the previously recorded BLF and compare it with the BLF information provided by the customer to find the cause and locate the problem,
 Modify the code. Based on the needs of the client.
 Introduction to Project Architecture
+
 steering system 
+
 Purchase hardware components such as gateway boxes, wiring harnesses, burners, etc
 The tool group is responsible for gateway box software development and VN89 development
 The brushing group is responsible for brushing the program into EPS
 Personal Role Description Gateway Box Software Development, Testing, and Report Writing
+
 Gateway Box Hardware Description
+
 Gateway box DB9 port 2 low 7 high 1 low 8 high
-Power cord: blue IG, yellow GND, brown+12V
-Vehicle line: Blue CAN high brown CAN low signal input from the vehicle end
-EPS line: Blue CAN high brown CAN low yellow IG signal output from EPS side
+
+Power cord: 
+
+blue IG, yellow GND, brown+12V
+
+Vehicle line:
+
+Blue CAN high brown CAN low signal input from the vehicle end
+
+EPS line: 
+
+Blue CAN high brown CAN low yellow IG signal output from EPS side
+
 The function of the gateway box is to serve as a hub at the vehicle end and EPS side, serving as a relay signal
 ! [Gateway Box Signal Flow]（ https://github.com/Judy-sspu/Judy-s-Own-Repository/blob/master/Picture1.png ）
 Problems encountered during the code writing process:
+
 The cycle was not set correctly
+
 Node allocation error, channel allocation error
+
 The signal value defines too few bit values, resulting in overflow and mismatch with expected results
+
 The baud rate of the node is not set correctly, resulting in no signal being received or no signal being emitted
+
 Incorrect CRC and counter settings result in no assistance
+
 The sending function was written incorrectly, resulting in all bytes after the last 8 bytes of the CANfd message being 0 and unable to transmit a value
+
 The incorrect sending and receiving relationship settings for multiple messages result in incomplete assistance from EPS
 How to determine if there is a problem with your code?
+
 After the program is flushed into the gateway box, observe the cycle, channel, message type, Data segment data, and signal value of the message in the CANalyzer to compare whether it meets the expected results
+
 If the expected value is not reached, further locate the misalignment type, then locate the program line where a certain message is located, check for errors in the value passed, and modify the program.
+
 How to determine if there are no issues with checksum and CRC?
+
 The function of checksum and CRC is to perform data verification on other bytes of the message, used to detect whether there have been errors or changes in the data during transmission or storage.
+
 First, connect directly to EPS without connecting to the gateway box. Open CANalyzer to record a BLF file and record the checksum value corresponding to each counter value of a certain message
+
 Then connect to the gateway box, record a BLF file, record the CRC value corresponding to the counter of the same message, and continue comparing the CRC and counter after two operations
+
 Is it consistent? Consistent indicates that the logic of the CRC algorithm is not a problem in the program.
 
 
