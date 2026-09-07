@@ -1,0 +1,60 @@
+    NRC定义表
+    PR      = 0x00,//positive response
+    GR      = 0x10,//general reject
+    SNS     = 0x11,//service not supported
+    SFNS    = 0x12,//sub-function not supported
+    IMLOIF  = 0x13,//incorrect message length or invalid format
+    RTL     = 0x14,//response too long
+    BRR     = 0x21,//busy repeat request
+    CNC     = 0x22,//conditions not correct
+    RSE     = 0x24,//request sequence error
+    NRFSC   = 0x25,//No response from sub-net component
+    FPEORA  = 0x26,//Failure prevents execution of requested action
+    ROOR    = 0x31,//reqeust out of range
+    SAD     = 0x33,//security access denied
+    IK      = 0x35,//invalid key
+    ENOA    = 0x36,//exceed number of attempts
+    RTDNE   = 0x37,//required time delay not expired
+    UDNA    = 0x70,//upload download not accepted
+    TDS     = 0x71,//transfer data suspended
+    GPF     = 0x72,//general programming failure
+    WBSC    = 0x73,//wrong block sequence counter
+    RCRRP   = 0x78,//request correctly received-respone pending
+    SFNSIAS = 0x7e,//sub-function not supported in active session
+    SNSIAS  = 0x7F,//service not supported in active session
+    VTH     = 0x92,//voltage too high
+    VTL     = 0x93,//voltage too low
+
+
+
+NRC定义表
+PR=0x00，//肯定响应
+GR=0x10，//一般拒绝
+SNS=0x11，//不支持服务
+SFNS=0x12，//不支持子功能
+IMLOIF=0x13，//消息长度不正确或格式无效
+RTL=0x14，//响应太长
+BRR=0x21，//繁忙重复请求
+CNC=0x22，//条件不正确
+RSE=0x24，//请求序列错误
+NRFSC=0x25，//子网组件无响应
+FPEORA=0x26，//失败会阻止执行请求的操作
+ROOR=0x31，//要求必须超出范围
+SAD=0x33，//安全访问被拒绝
+IK=0x35，//无效密钥
+ENOA=0x36，//超过尝试次数
+RTDNE=0x37，//所需的时间延迟未到期
+UDNA=0x70，//不接受上传下载
+TDS=0x71，//传输数据已暂停
+GPF=0x72，//一般编程失败
+WBSC=0x73，//块序列计数器错误
+RCRRP=0x78，//请求正确接收响应待定
+SFNSIAS=0x7e，//活动会话中不支持子功能
+SNSIAS=0x7F，//活动会话中不支持服务
+VTH=0x92，//电压过高
+VTL=0x93，//电压过低
+
+
+
+
+
